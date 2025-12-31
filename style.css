@@ -1,0 +1,454 @@
+/* ===== ОБЩИЕ НАСТРОЙКИ ===== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+    background: linear-gradient(180deg, #fff0f5, #ffe4e1);
+    color: #333;
+    text-align: center;
+    margin: 0;
+}
+
+section {
+    padding: 80px 20px;
+}
+
+h1, h2 {
+    margin-bottom: 20px;
+}
+
+button {
+    padding: 12px 24px;
+    font-size: 16px;
+    border: none;
+    border-radius: 30px;
+    background: #ff5e8e;
+    color: white;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+}
+
+/* ===== HERO ===== */
+.hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 20px;
+}
+
+/* ===== СЧЁТЧИК ===== */
+.counter p {
+    font-size: 28px;
+    font-weight: bold;
+    color: #ff3366;
+}
+
+/* ===== ТАЙМЛАЙН ===== */
+/* ===== ТАЙМЛАЙН SCROLL ===== */
+.timeline-window {
+    position: relative;
+    height: 320px;
+    overflow: hidden;
+    margin-top: 40px;
+    touch-action: none;
+}
+
+.timeline-list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.timeline-item {
+    width: 90%;
+    max-width: 500px;
+    background: white;
+    padding: 20px;
+    margin: 10px 0;
+    border-radius: 16px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+
+    transition: 
+        transform 0.4s ease,
+        opacity 0.4s ease,
+        filter 0.4s ease;
+
+    opacity: 0.4;
+    filter: blur(2px);
+    transform: scale(0.9);
+}
+
+/* АКТИВНЫЙ */
+.timeline-item.active {
+    opacity: 1;
+    filter: blur(0);
+    transform: scale(1);
+    z-index: 2;
+}
+
+/* СОСЕДНИЕ */
+.timeline-item.prev,
+.timeline-item.next {
+    opacity: 0.6;
+    filter: blur(1px);
+    transform: scale(0.95);
+}
+
+
+/* ===== СЛАЙДЕР ТАЙМЛАЙН ===== */
+.slider-container {
+    max-width: 320px;
+    margin: 0 auto 40px; /* ← ОТСТУП СНИЗУ */
+    position: relative;
+    height: 420px;
+}
+
+.slide {
+    width: 100%;
+    border-radius: 20px;
+    display: none;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);  
+}
+
+.slide.active {
+    display: block;
+}
+
+.slider-buttons {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+
+/* ===== СЛАЙДЕР ФОТО ===== */
+.photo-slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    border-radius: 20px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+
+    opacity: 0;
+    transform: scale(0.98);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.photo-slide.active {
+    opacity: 1;
+    transform: scale(1);
+    z-index: 1;
+}
+
+
+/*===== ПОДАРОК =====*/
+.cards-container {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 20px;  
+}
+
+.card {
+  width: 150px;
+  height: 200px;
+  perspective: 1000px;
+  cursor: pointer;
+  position: relative;
+}
+
+.card-front, .card-back {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  backface-visibility: hidden;
+  border-radius: 10px;
+  overflow: hidden;
+  transition: transform 0.6s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.card-front img, .card-back img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.card-back {
+  transform: rotateY(180deg);
+}
+
+.card.open .card-front {
+  transform: rotateY(180deg);
+}
+
+.card.open .card-back {
+  transform: rotateY(0deg);
+}
+
+.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+/*.final-text {
+    opacity: 0;
+    transform: scale(0.9);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.final-text.show {
+    opacity: 1;
+    transform: scale(1);
+}*/
+
+
+/* ===== АНИМАЦИИ ===== */
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ===== СЕРДЕЧКИ ===== */
+.heart {
+    position: fixed;
+    bottom: -40px;
+
+    z-index: 55; /* ВАЖНО */
+
+    pointer-events: none;
+    animation: floatUp linear forwards;
+}
+
+@keyframes floatUp {
+    from {
+        transform: translate(0, 0) scale(1) rotate(0deg);
+        opacity: 1;
+    }
+    to {
+        transform: translate(var(--x), -120vh) scale(1.5) rotate(360deg);
+        opacity: 0;
+    }
+}
+ 
+.timeline-window::before,
+.timeline-window::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 40px;
+    z-index: 3;
+    pointer-events: none;
+}
+
+/* ===== РАСПОЛОЖЕНИЕ КАРТИНОК НА ЗАДНЕМ ФОНЕ ===== */
+.background-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    min-height: 100%;
+    z-index: 0;
+    pointer-events: none;
+}
+
+.content {
+    position: relative;
+    z-index: 2;
+}
+
+/* общий стиль */
+.bg-item {
+    position: absolute;
+    opacity: 0.9;
+    filter: blur(0.4px);
+}
+
+/* картинки */
+.bg-img {
+    width: 120px;
+    border-radius: 12px;
+}
+
+/* текст */
+.bg-text {
+    font-size: 20px;
+    font-weight: 600;
+}
+
+/*расположение*/
+.bg-item:nth-child(1) {
+    top: 253vh;
+    left: 8%;
+    transform: rotate(-10deg) scale(0.75);
+}
+.bg-item:nth-child(2) {
+    top: 5%;
+    left: 12%;
+    transform: rotate(-10deg);
+}
+.bg-item:nth-child(3) {
+    top: 15%;
+    right: 12%;
+    transform: rotate(10deg);
+}
+.bg-item:nth-child(4) {
+    top: 120vh;
+    right: 10%;
+    transform: rotate(5deg);
+}
+.bg-item:nth-child(5) {
+    top: 75%;
+    left: 10%;
+    transform: rotate(-10deg);
+}
+.bg-item:nth-child(6) {
+    top: 120vh;
+    right: 10%;
+    transform: rotate(5deg);
+}
+.bg-item:nth-child(7) {
+    top: 70%;
+    left: 10%;
+    transform: rotate(-5deg);
+}
+
+
+/* ===== СТОП-КАДР ===== */
+.final-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 60;
+
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.6s ease;
+}
+
+.final-overlay.show {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+
+.final-text {
+    position: fixed;
+    inset: 0;
+    z-index: 70;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    text-align: center;
+    color: white;
+
+    opacity: 0;
+    transform: scale(0.9);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.final-text.show {
+    opacity: 1;
+    transform: scale(1);
+}
+
+body.final-active {
+    overflow: hidden;
+}
+ 
+/*ПОЗДРАВЛЕНИЕ*/
+.show-birthday {
+    position: fixed;
+    bottom: 30px;
+    left: 0;
+    right: 0;
+    margin: 10%;
+
+    display: flex;
+    justify-content: center;
+
+    color: white;
+    font-size: 18px;
+    cursor: pointer;
+
+    opacity: 0;
+    z-index: 80;
+
+    transition: opacity 0.6s ease;
+}
+
+.show-birthday.show {
+    opacity: 1;
+}
+
+.birthday-message {
+    position: fixed;
+    inset: 0;
+    z-index: 90;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: rgba(0, 0, 0, 0.75);
+    opacity: 0;
+
+    transition: opacity 0.6s ease;
+}
+
+.birthday-message.show {
+    opacity: 1;
+}
+
+.birthday-card {
+    background: white;
+    color: #222;
+    padding: 30px;
+    border-radius: 16px;
+    max-width: 90%;
+    text-align: center;
+
+    transform: scale(0.9);
+    transition: transform 0.6s ease;
+}
+
+.birthday-message.show .birthday-card {
+    transform: scale(1);
+}
+
+.birthday-photo {
+    margin-top: 20px;
+
+    width: 100%;
+    max-width: 320px;
+    border-radius: 14px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+
+    object-fit: cover;
+}
